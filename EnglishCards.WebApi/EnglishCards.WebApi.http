@@ -1,0 +1,6 @@
+@EnglishCards.WebApi_HostAddress = http://localhost:5017
+
+GET {{EnglishCards.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

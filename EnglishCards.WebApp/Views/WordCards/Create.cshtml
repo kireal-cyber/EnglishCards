@@ -1,0 +1,54 @@
+@model EnglishCards.WebApp.Models.WordCardViewModel
+
+@{
+    ViewData["Title"] = "Создать карточку";
+}
+
+<h1>Создать карточку</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="EnglishWord" class="form-label"></label>
+        <input asp-for="EnglishWord" class="form-control" />
+        <span asp-validation-for="EnglishWord" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Transcription" class="form-label"></label>
+        <input asp-for="Transcription" class="form-control" />
+        <span asp-validation-for="Transcription" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Translation" class="form-label"></label>
+        <input asp-for="Translation" class="form-control" />
+        <span asp-validation-for="Translation" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ExampleSentence" class="form-label"></label>
+        <input asp-for="ExampleSentence" class="form-control" />
+        <span asp-validation-for="ExampleSentence" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PronunciationUrl" class="form-label"></label>
+        <input asp-for="PronunciationUrl" class="form-control" />
+        <span asp-validation-for="PronunciationUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DeckId" class="form-label">Тема</label>
+        <select asp-for="DeckId" class="form-select" asp-items="ViewBag.Decks"></select>
+        <span asp-validation-for="DeckId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

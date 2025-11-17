@@ -1,0 +1,99 @@
+@model List<EnglishCards.WebApp.Models.TaskItemViewModel>
+
+@{
+    ViewData["Title"] = "Назначенные задачи";
+
+    var selectedStatus = ViewBag.SelectedStatus as EnglishCards.WebApp.Models.TaskStatusVm?;
+    var sort = ViewBag.Sort as string;
+}
+
+<h1 class="h3 mb-3">Назначенные задачи</h1>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <label class="form-label">Пользователь</label>
+        <select name="userId" class="form-select" asp-items="ViewBag.Users"></select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Статус</label>
+        <select name="status" class="form-select">
+            <option value="">(все)</option>
+            @foreach (var s in Enum.GetValues(typeof(EnglishCards.WebApp.Models.TaskStatusVm)))
+            {
+                var val = (int)s;
+                var text = s.ToString();
+                var isSelected = selectedStatus.HasValue && (int)selectedStatus.Value == val;
+                <option value="@val" selected="@(isSelected ? "selected" : null)">@text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Сортировка</label>
+        <select name="sort" class="form-select">
+            <option value="" selected="@(string.IsNullOrEmpty(sort) ? "selected" : null)">По дедлайну</option>
+            <option value="status" selected="@(sort == "status" ? "selected" : null)">По статусу</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-funnel me-1"></i>Фильтр
+        </button>
+    </div>
+</form>
+
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Название</th>
+            <th>Тема</th>
+            <th>Пользователь</th>
+            <th>Дедлайн</th>
+            <th>Статус</th>
+            <th style="width: 220px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        var rowClass = item.IsOverdue ? "table-danger" : "";
+        <tr class="@rowClass">
+            <td>@item.Title</td>
+            <td>@item.DeckName</td>
+            <td>@item.AssignedUserName</td>
+            <td>
+                @if (item.DueDate.HasValue)
+                {
+                    @item.DueDate.Value.ToLocalTime().ToString("dd.MM.yyyy")
+                }
+            </td>
+            <td>@item.Status</td>
+            <td>
+                <form asp-action="ChangeStatus" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path + Context.Request.QueryString" />
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="btn-group" role="group">
+                        <button name="status"
+                                value="@((int)EnglishCards.WebApp.Models.TaskStatusVm.InProgress)"
+                                class="btn btn-sm btn-outline-secondary">
+                            В работе
+                        </button>
+                        <button name="status"
+                                value="@((int)EnglishCards.WebApp.Models.TaskStatusVm.Done)"
+                                class="btn btn-sm btn-outline-success">
+                            Готово
+                        </button>
+                        <button name="status"
+                                value="@((int)EnglishCards.WebApp.Models.TaskStatusVm.Canceled)"
+                                class="btn btn-sm btn-outline-danger">
+                            Отмена
+                        </button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

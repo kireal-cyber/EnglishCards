@@ -1,0 +1,35 @@
+@model EnglishCards.WebApp.Models.TaskItemViewModel
+
+@{
+    ViewData["Title"] = "Удалить задачу";
+}
+
+<h1 class="h3 mb-3 text-danger">Удалить задачу</h1>
+
+<div class="alert alert-warning">
+    Вы уверены, что хотите удалить задачу <strong>@Model.Title</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Тема</dt>
+    <dd class="col-sm-9">@Model.DeckName</dd>
+
+    <dt class="col-sm-3">Дедлайн</dt>
+    <dd class="col-sm-9">
+        @if (Model.DueDate.HasValue)
+        {
+            @Model.DueDate.Value.ToLocalTime().ToString("dd.MM.yyyy")
+        }
+    </dd>
+
+    <dt class="col-sm-3">Статус</dt>
+    <dd class="col-sm-9">@Model.Status</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash me-1"></i>Удалить
+    </button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Отмена</a>
+</form>

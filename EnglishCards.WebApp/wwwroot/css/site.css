@@ -1,0 +1,38 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+h1, .h1, .h3 { letter-spacing: .2px; }
+
+
+.navbar-brand { letter-spacing: .3px; }
+
+
+main .container { max-width: 980px; }
+
+
+.btn { border-radius: .6rem; }
+.btn-primary { box-shadow: 0 0.2rem 0.5rem rgba(13,110,253,.25); }
+
+
+table.table { border-radius: .6rem; overflow: hidden; }
+table.table td, table.table th { vertical-align: middle; }

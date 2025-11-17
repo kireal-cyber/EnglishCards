@@ -1,0 +1,20 @@
+@model EnglishCards.WebApp.Models.DeckViewModel
+
+@{
+    ViewData["Title"] = "Удалить тему";
+}
+
+<h1>Удалить тему</h1>
+
+<h3>Вы уверены, что хотите удалить эту тему?</h3>
+
+<div>
+    <h4>@Model.Name</h4>
+    <p>@Model.Description</p>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

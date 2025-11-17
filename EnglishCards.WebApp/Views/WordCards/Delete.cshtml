@@ -1,0 +1,21 @@
+@model EnglishCards.WebApp.Models.WordCardViewModel
+
+@{
+    ViewData["Title"] = "Удалить карточку";
+}
+
+<h1>Удалить карточку</h1>
+
+<h3>Вы уверены, что хотите удалить эту карточку?</h3>
+
+<div>
+    <p><strong>Слово:</strong> @Model.EnglishWord</p>
+    <p><strong>Перевод:</strong> @Model.Translation</p>
+    <p><strong>Тема:</strong> @Model.Deck?.Name</p>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

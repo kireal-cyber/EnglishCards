@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Карточки слов";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">@ViewData["Title"]</h1>
+    <a class="btn btn-primary" asp-action="Create">
+        <i class="bi bi-plus-lg me-1"></i>Добавить карточку
+    </a>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Слово</th>
+            <th>Перевод</th>
+            <th>Тема</th>
+            <th>Пример</th>
+            <th style="width:140px"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.EnglishWord</td>
+            <td>@item.Translation</td>
+            <td>@item.DeckName</td>
+            <td>@item.ExampleSentence</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary me-1" asp-action="Edit" asp-route-id="@item.Id">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">
+                    <i class="bi bi-trash"></i>
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
